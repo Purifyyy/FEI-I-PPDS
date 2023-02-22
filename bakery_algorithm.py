@@ -1,3 +1,11 @@
+"""This module contains an implementation of bakery algorithm.
+
+The Bakery Algorithm is a mutual exclusion algorithm, which is used to ensure,
+that only one thread can enter a critical section of code at any given time.
+"""
+
+__author__ = "Tomáš Baďura"
+
 from fei.ppds import Thread
 from time import sleep
 
@@ -7,14 +15,23 @@ num_in: list[int] = [0] * NUM_THREADS
 
 
 def bakery_alg(tid: int):
+    """Simulates a process.
+
+    Arguments:
+        tid -- thread id
+    """
     global num, num_in, NUM_THREADS
+    # thread's state is changed to '1', indicating that it's currently in the process of acquiring a ticket number
     num_in[tid] = 1
+    # thread is assigned a unique ticket number, that's greater than any ticket number currently held by other threads
     num[tid] = max(num) + 1
     num_in[tid] = 0
 
     for j in range(NUM_THREADS):
         while num_in[j]:
             pass
+        # thread with lower ticket number is allowed to entry the critical section
+        # if threads hold the same ticket number, thread id is used as a tiebreaker
         while num[j] != 0 and (num[j] < num[tid] or (num[j] == num[tid] and j < tid)):
             pass
 
