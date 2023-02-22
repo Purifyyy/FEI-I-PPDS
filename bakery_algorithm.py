@@ -1,32 +1,30 @@
 from fei.ppds import Thread
 from time import sleep
 
-num_threads: int = 8
-num: list[int] = [0] * num_threads
-num_in: list[int] = [0] * num_threads
+NUM_THREADS: int = 8
+num: list[int] = [0] * NUM_THREADS
+num_in: list[int] = [0] * NUM_THREADS
 
 
 def bakery_alg(tid: int):
-    global num, num_in, num_threads
-    i = tid
-    num_in[i] = 1
-    num[i] = max(num) + 1
-    num_in[i] = 0
+    global num, num_in, NUM_THREADS
+    num_in[tid] = 1
+    num[tid] = max(num) + 1
+    num_in[tid] = 0
 
-    for j in range(num_threads):
+    for j in range(NUM_THREADS):
         while num_in[j]:
             pass
-        while num[j] != 0 and (num[j] < num[i] or (num[j] == num[i] and j < i)):
+        while num[j] != 0 and (num[j] < num[tid] or (num[j] == num[tid] and j < tid)):
             pass
 
     # beginning of critical section
-    print(f"Process {i} runs a complicated computation!")
+    print(f"Process {tid} runs a complicated computation!")
     sleep(1)
     # end of critical section
+    num[tid] = 0
 
-    num[i] = 0
 
-
-if __name__ == '__main__':
-    threads = [Thread(bakery_alg, i) for i in range(num_threads)]
+if __name__  == '__main__':
+    threads = [Thread(bakery_alg, i) for i in range(NUM_THREADS)]
     [t.join() for t in threads]
