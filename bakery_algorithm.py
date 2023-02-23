@@ -4,7 +4,7 @@ The Bakery Algorithm is a mutual exclusion algorithm, which is used to ensure,
 that only one thread can enter a critical section of code at any given time.
 """
 
-__author__ = "Tomáš Baďura"
+__authors__ = "Tomáš Vavro, Tomáš Baďura"
 
 from fei.ppds import Thread
 from time import sleep
@@ -15,7 +15,11 @@ num_in: list[int] = [0] * NUM_THREADS
 
 
 def bakery_alg(tid: int):
-    """Simulates a process.
+    """Grant exclusive access to critical section, to thread with id tid
+
+    Once it's the threads' turn, it can enter the critical section and perform its task,
+    using shared resources. While performing the task, it is insured that no other thread
+    may enter the critical section.
 
     Arguments:
         tid -- thread id
