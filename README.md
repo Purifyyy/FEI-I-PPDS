@@ -7,6 +7,8 @@
 
 Repository for semi-compulsory university course [I-PPDS](https://uim.fei.stuba.sk/predmet/i-ppds/), at FEI STU.
 
+---
+
 ### The course is divided into several assignments
 
 1. [Assignment 01](https://github.com/Purifyyy/Badura_98780_feippds/tree/01) - Lamport's bakery algorithm
