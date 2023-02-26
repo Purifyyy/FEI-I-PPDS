@@ -45,7 +45,7 @@ Since each thread is assigned a unique ticket number, the Bakery algorithm ensur
 
 ## Installation guide
 
-In order to run our implementation of bakery algorithm, it is recommended that a Python version 3.8, or higher is used. Additionally a [fei.ppds](https://github.com/Programator2/ppds) python package implementing the `Thread` is required. The package can be installed using pip: 
+In order to run our implementation of bakery algorithm, it is recommended that a Python version 3.8, or higher is used. Additionally a [fei.ppds](https://github.com/Programator2/ppds) python package implementing `Thread` class is required. The package can be installed using pip: 
 
 ```
 pip install --upgrade fei.ppds
