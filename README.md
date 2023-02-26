@@ -17,7 +17,7 @@ To better understand mutual exclusion, let's assume a shared printer in an offic
 
 - A thread executing outside the critical section must not hinder other threads from entering it.
 
-- If multiple threads are accessing the critical section,they must be allowed access within a finite amount of time.
+- If multiple threads are accessing the critical section, they must be allowed access within a finite amount of time.
 
 - Processes must not assume anything about their timing or scheduling relative to each other when entering the critical section.
 
@@ -32,3 +32,21 @@ Lamport's Bakery algorithm, proposed by Leslie Lamport in 1974, provides a fair 
 3. When a thread exits the critical section, it sets its ticket number to 0, indicating that it is no longer interested in accessing the critical section.
 
 4. Other threads waiting to access the critical section continue to loop until their ticket number is the smallest. 
+
+## Necessary mutual exclusion conditions and Bakery algorithm
+
+The algorithm achieves the first condition of mutual exclusion by only allowing the thread with the smallest ticket number to enter the critical section first (thread IDs are used as tiebreaker, as mentioned in the section above).
+
+A thread executing outside the critical section does not hinder other threads from entering it, as it never attempts to acquire a ticket number. Which therefore indicates, it's not interested in joining the waiting queue, or entering the critical section at all.
+
+If multiple threads are waiting to enter the critical section, they will be served in the order of their ticket numbers, ensuring that each thread eventually gets its turn to enter the critical section. Because the threads are served in order, the time taken for each thread to enter the critical section is bounded by the time taken for all the threads with lower ticket numbers to complete their execution.
+
+Since each thread is assigned a unique ticket number, the Bakery algorithm ensures that no process can make any assumptions about its timing or scheduling relative to other processes when entering the critical section. This means that the order in which processes enter the critical section is determined solely by their ticket numbers, and not by any external factors such as the timing or scheduling of other processes. This ensures that each process gets its turn to execute in the critical section, without being influenced by the timing or scheduling of other processes.
+
+## Installation guide
+
+In order to run our implementation of bakery algorithm, it is recommended that a Python version 3.8, or higher is used. Additionally a [fei.ppds](https://github.com/Programator2/ppds) python package implementing the `Thread` is required. The package can be installed using pip: 
+
+```
+pip install --upgrade fei.ppds
+```
