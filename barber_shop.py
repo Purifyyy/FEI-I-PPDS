@@ -10,7 +10,7 @@ Year: 2023
 __authors__ = "Tomáš Baďura, Marián Šebeňa, Tomáš Vavro"
 
 
-from fei.ppds import Mutex, Thread
+from fei.ppds import Mutex, Thread, Semaphore
 from time import sleep
 from random import randint
 
@@ -18,14 +18,12 @@ from random import randint
 class Shared(object):
 
     def __init__(self):
-
-        # TODO : Initialize patterns we need and variables
         self.mutex = Mutex()
         self.waiting_room = 0
-        # self.customer = Rendezvous is implemented as ?
-        # self.barber = Rendezvous is implemented as ?
-        # self.customer_done = Rendezvous is implemented as ?
-        # self.barber_done = Rendezvous is implemented as ?
+        self.customer = Semaphore(0)
+        self.barber = Semaphore(0)
+        self.customer_done = Semaphore(0)
+        self.barber_done = Semaphore(0)
 
 
 def get_haircut(i):
@@ -84,8 +82,8 @@ def main():
     for t in customers + [hair_stylist]:
         t.join()
 
-# TODO: Global variables C = 5 numOfCustomers N = 3 sizeOfWaitingRoom
-
+C = 5 # number of customers
+N = 3 # size of waiting room
 
 if __name__ == "__main__":
     main()
