@@ -27,16 +27,17 @@ class Shared(object):
 
 
 def get_haircut(i):
-    sleep(0.1)
+    print(f"Customer {i} is getting a haircut")
+    sleep(0.5)
 
 
 def cut_hair():
-    sleep(0.1)
-
+    print("Barber is cutting hair")
+    sleep(0.5)
 
 def balk(i):
+    print(f"Customer {i} entered a full waiting room *sigh*")
     sleep(0.25)
-
 
 
 def growing_hair(i):
@@ -45,20 +46,21 @@ def growing_hair(i):
 
 
 def customer(i, shared):
-    # TODO: Function represents customers behaviour. Customer come to waiting if room is full sleep.
-    # TODO: Wake up barber and waits for invitation from barber. Then gets new haircut.
-    # TODO: After it both wait to complete their work. At the end waits to hair grow again
-
     while True:
         shared.mutex.lock()
 
         if shared.waiting_room < N:
+            print(f"Customer {i} sat down in the waiting room chair")
             shared.waiting_room += 1
             shared.mutex.unlock()
 
-            # TODO: Rendezvous 1
+            shared.customer.signal()
+            shared.barber.wait()
+
             get_haircut(i)
-            # TODO: Rendezvous 2
+
+            shared.customer_done.signal()
+            shared.barber_done.wait()
 
             shared.mutex.lock()
             shared.waiting_room -= 1
@@ -71,14 +73,14 @@ def customer(i, shared):
 
 
 def barber(shared):
-    # TODO: Function barber represents barber. Barber is sleeping.
-    # TODO: When customer come to get new hair wakes up barber.
-    # TODO: Barber cuts customer hair and both wait to complete their work.
-
     while True:
-        # TODO: Rendezvous 1
+        shared.customer.wait()
+        shared.barber.signal()
+
         cut_hair()
-        # TODO: Rendezvous 2
+
+        shared.customer_done.wait()
+        shared.barber_done.signal()
 
 
 def main():
