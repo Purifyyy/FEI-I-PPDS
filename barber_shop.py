@@ -27,20 +27,20 @@ class Shared(object):
 
 
 def get_haircut(i):
-    # TODO: Simulate time and print info when customer gets haircut
+    sleep(0.1)
 
 
 def cut_hair():
-    # TODO: Simulate time and print info when barber cuts customer's hair
+    sleep(0.1)
 
 
 def balk(i):
-    # TODO: Represents situation when waiting room is full and print info
+    sleep(0.25)
 
 
 
 def growing_hair(i):
-    # TODO: Represents situation when customer wait after getting haircut. So hair is growing and customer is sleeping for some time
+    sleep(1)
 
 
 
@@ -50,14 +50,24 @@ def customer(i, shared):
     # TODO: After it both wait to complete their work. At the end waits to hair grow again
 
     while True:
-        # TODO: Access to waiting room. Could customer enter or must wait? Be careful about counter integrity :)
+        shared.mutex.lock()
 
-        # TODO: Rendezvous 1
-        get_haircut(i)
-        # TODO: Rendezvous 2
+        if shared.waiting_room < N:
+            shared.waiting_room += 1
+            shared.mutex.unlock()
 
-        # TODO: Leave waiting room. Integrity again
-        growing_hair(i)
+            # TODO: Rendezvous 1
+            get_haircut(i)
+            # TODO: Rendezvous 2
+
+            shared.mutex.lock()
+            shared.waiting_room -= 1
+            shared.mutex.unlock()
+            growing_hair(i)
+            continue
+
+        shared.mutex.unlock()
+        balk(i)
 
 
 def barber(shared):
