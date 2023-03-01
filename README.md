@@ -46,7 +46,7 @@ For both the barber thread and the customer threads, we implement target functio
 
 Before incrememting or decrementing the ``waiting_room`` variable (indicating customer's entry and exit of the waiting area), the customer thread function must acquire ``mutex`` lock. After performing this operation, the function releases it.
 
-##### Rendezvous points
+### Rendezvous points
 
 To achieve a simulation where barber is woken up by a customer, prepares for hair cutting and subsequently signals the customer he's ready to cut hair, we use a pair of defined semaphores, `customer` and `barber`. To demonstrate this situation from the customer function perspective, we will use following code snippet:
 
@@ -86,7 +86,7 @@ shared.customer_done.wait()  # wait for customer to be finished getting a haircu
 
 The following figure demonstrates one of many possible correct scenarios of our implementation of the *Sleeping Barber Problem*.
 
-<img title="" src="file:///C:/Users/Tomáš/Desktop/barbershop.png" alt="barbershop.png" data-align="center">
+![ScreenShot](https://i.imgur.com/vIckPA7_d.webp?maxwidth=760&fidelity=grand)
 
 ## Installation guide
 
