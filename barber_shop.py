@@ -44,7 +44,7 @@ def get_haircut(i):
         i (int) -- the ID of the customer
     """
     print(f"Customer {i} is getting a haircut")
-    sleep(0.5)
+    sleep(randint(36, 50) / 100)
 
 
 def cut_hair():
@@ -52,7 +52,7 @@ def cut_hair():
     Simulates a barber cutting customer's hair.
     """
     print("Barber is cutting hair")
-    sleep(0.35)
+    sleep(randint(30, 35) / 100)
 
 def balk(i):
     """
@@ -62,7 +62,7 @@ def balk(i):
         i (int) -- the ID of the customer
     """
     print(f"\033[91mCustomer {i} entered a full waiting room\033[00m *sigh*")
-    sleep(0.25)
+    sleep(randint(20, 30) / 100)
 
 
 def growing_hair(i):
@@ -72,7 +72,7 @@ def growing_hair(i):
     Arguments:
         i (int) -- the ID of the customer
     """
-    sleep(1)
+    sleep(randint(100, 200) / 100)
 
 
 def customer(i, shared):
