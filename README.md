@@ -12,3 +12,4 @@ Repository for semi-compulsory university course [I-PPDS](https://uim.fei.stuba.
 ### The course is divided into several assignments
 
 1. [Assignment 01](https://github.com/Purifyyy/Badura_98780_feippds/tree/01) - Lamport's bakery algorithm
+2. [Assignment 02](https://github.com/Purifyyy/Badura_98780_feippds/tree/02) - Sleeping barber problem
