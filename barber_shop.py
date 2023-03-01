@@ -1,9 +1,9 @@
 """
-Program represents different sequences of using mutex
+Sleeping Barber Problem simulation.
 
-University: STU Slovak Technical University in Bratislava
-Faculty: FEI Faculty of Electrical Engineering and Information Technology
-Year: 2023
+This script simulates the Sleeping Barber Problem, where customers arrive at a barber shop and
+either get a haircut or leave if there are no empty seats in the waiting room. There is only
+one barber in the shop who can cut hair.
 """
 
 
@@ -27,24 +27,52 @@ class Shared(object):
 
 
 def get_haircut(i):
+    """
+    Simulates a customer getting his hair cut.
+
+    Arguments:
+        i (int) -- the ID of the customer
+    """
     print(f"Customer {i} is getting a haircut")
     sleep(0.5)
 
 
 def cut_hair():
+    """
+    Simulates a barber cutting customers hair.
+    """
     print("Barber is cutting hair")
     sleep(0.35)
 
 def balk(i):
+    """
+    Simulates a customer leaving for a given time upon arriving at a full waiting room.
+
+    Arguments:
+        i (int) -- the ID of the customer
+    """
     print(f"\033[91mCustomer {i} entered a full waiting room\033[00m *sigh*")
     sleep(0.25)
 
 
 def growing_hair(i):
+    """
+    Simulates a growth of customers hair.
+
+    Arguments:
+        i (int) -- the ID of the customer
+    """
     sleep(1)
 
 
 def customer(i, shared):
+    """
+    Simulates a customer visiting the barber shop.
+
+    Arguments:
+        i (int) -- the ID of the customer
+        shared (Shared) -- an instance of the Shared class containing semaphores and other shared variables
+    """
     while True:
         shared.mutex.lock()
 
@@ -73,6 +101,12 @@ def customer(i, shared):
 
 
 def barber(shared):
+    """
+    Simulates a barber performing his work in the barber shop.
+
+    Arguments:
+        shared (Shared) -- an instance of the Shared class containing semaphores and other shared variables
+    """
     while True:
         shared.customer.wait()  # wait until a customer arrives
         shared.barber.signal()  # start cutting hair
