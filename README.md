@@ -86,7 +86,7 @@ shared.customer_done.wait()  # wait for customer to be finished getting a haircu
 
 The following figure demonstrates one of many possible correct scenarios of our implementation of the *Sleeping Barber Problem*.
 
-![ScreenShot](https://i.imgur.com/vIckPA7_d.webp?maxwidth=760&fidelity=grand)
+<img src="https://i.imgur.com/vIckPA7_d.webp?maxwidth=760&fidelity=grand" title="sample program     run" alt="sampleRunScreenshot" data-align="center">
 
 ## Installation guide
 
