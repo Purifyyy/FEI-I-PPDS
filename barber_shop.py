@@ -48,18 +48,18 @@ def customer(i, shared):
     while True:
         shared.mutex.lock()
 
-        if shared.waiting_room < N:
+        if shared.waiting_room < N:    # check if there is space in waiting room
             print(f"\033[92mCustomer {i} SAT DOWN in the waiting room chair\033[00m")
             shared.waiting_room += 1
             shared.mutex.unlock()
 
-            shared.customer.signal()
-            shared.barber.wait()
+            shared.customer.signal()    # wake up barber
+            shared.barber.wait()    # wait for the barber to get ready to cut hair
 
             get_haircut(i)
 
-            shared.barber_done.wait()
-            shared.customer_done.signal()
+            shared.barber_done.wait()   # wait for barber to finish cutting hair
+            shared.customer_done.signal()   # customer is done getting a haircut
 
             shared.mutex.lock()
             shared.waiting_room -= 1
@@ -68,19 +68,19 @@ def customer(i, shared):
             growing_hair(i)
             continue
 
-        shared.mutex.unlock()
+        shared.mutex.unlock()   # no seats in waiting room available, balk out and come later
         balk(i)
 
 
 def barber(shared):
     while True:
-        shared.customer.wait()
-        shared.barber.signal()
+        shared.customer.wait()  # wait until a customer arrives
+        shared.barber.signal()  # start cutting hair
 
         cut_hair()
 
-        shared.barber_done.signal()
-        shared.customer_done.wait()
+        shared.barber_done.signal()  # barber is done cutting the hair
+        shared.customer_done.wait()  # wait for customer to be finished getting a haircut
 
 
 def main():
