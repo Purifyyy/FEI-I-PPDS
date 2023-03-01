@@ -10,7 +10,7 @@ Year: 2023
 __authors__ = "Tomáš Baďura, Marián Šebeňa, Tomáš Vavro"
 
 
-from fei.ppds import Mutex, Thread, Semaphore
+from fei.ppds import Mutex, Thread, Semaphore, print
 from time import sleep
 from random import randint
 
@@ -33,10 +33,10 @@ def get_haircut(i):
 
 def cut_hair():
     print("Barber is cutting hair")
-    sleep(0.5)
+    sleep(0.35)
 
 def balk(i):
-    print(f"Customer {i} entered a full waiting room *sigh*")
+    print(f"\033[91mCustomer {i} entered a full waiting room\033[00m *sigh*")
     sleep(0.25)
 
 
@@ -44,13 +44,12 @@ def growing_hair(i):
     sleep(1)
 
 
-
 def customer(i, shared):
     while True:
         shared.mutex.lock()
 
         if shared.waiting_room < N:
-            print(f"Customer {i} sat down in the waiting room chair")
+            print(f"\033[92mCustomer {i} SAT DOWN in the waiting room chair\033[00m")
             shared.waiting_room += 1
             shared.mutex.unlock()
 
@@ -59,11 +58,12 @@ def customer(i, shared):
 
             get_haircut(i)
 
-            shared.customer_done.signal()
             shared.barber_done.wait()
+            shared.customer_done.signal()
 
             shared.mutex.lock()
             shared.waiting_room -= 1
+            print(f"\033[93mCustomer {i} LEFT the barber shop\033[00m")
             shared.mutex.unlock()
             growing_hair(i)
             continue
@@ -79,8 +79,8 @@ def barber(shared):
 
         cut_hair()
 
-        shared.customer_done.wait()
         shared.barber_done.signal()
+        shared.customer_done.wait()
 
 
 def main():
