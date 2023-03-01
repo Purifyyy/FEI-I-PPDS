@@ -16,7 +16,17 @@ from random import randint
 
 
 class Shared(object):
+    """
+    This class represents the shared state of the barber shop simulation.
 
+    Attributes:
+        mutex (Mutex) -- a mutex lock to provide mutual exclusion between customers
+        waiting_room (int) -- the number of available seats in the waiting room
+        customer (Semaphore) -- a semaphore to signal the barber when a customer arrives
+        barber (Semaphore) -- a semaphore to signal the customer when the barber is ready to cut hair
+        customer_done (Semaphore) -- a semaphore to signal the barber when the customer's haircut is done
+        barber_done (Semaphore) -- a semaphore to signal the customer when the barber finishes cutting
+    """
     def __init__(self):
         self.mutex = Mutex()
         self.waiting_room = 0
@@ -39,14 +49,14 @@ def get_haircut(i):
 
 def cut_hair():
     """
-    Simulates a barber cutting customers hair.
+    Simulates a barber cutting customer's hair.
     """
     print("Barber is cutting hair")
     sleep(0.35)
 
 def balk(i):
     """
-    Simulates a customer leaving for a given time upon arriving at a full waiting room.
+    Simulates a customer leaving for some time, upon arriving at a full waiting room.
 
     Arguments:
         i (int) -- the ID of the customer
@@ -57,7 +67,7 @@ def balk(i):
 
 def growing_hair(i):
     """
-    Simulates a growth of customers hair.
+    Simulates a growth of customer's hair.
 
     Arguments:
         i (int) -- the ID of the customer
@@ -68,6 +78,10 @@ def growing_hair(i):
 def customer(i, shared):
     """
     Simulates a customer visiting the barber shop.
+
+    A customer who enters the barber shop, checks for the availability of the barber,
+    sits in the waiting room if the barber is busy, and leaves the barber shop if
+    there is no available seat in the waiting room.
 
     Arguments:
         i (int) -- the ID of the customer
@@ -96,20 +110,23 @@ def customer(i, shared):
             growing_hair(i)
             continue
 
-        shared.mutex.unlock()   # no seats in waiting room available, balk out and come later
+        shared.mutex.unlock()   # no seats in waiting room available, balk out
         balk(i)
 
 
 def barber(shared):
     """
-    Simulates a barber performing his work in the barber shop.
+    Simulates a barber who cuts hair for customers.
+
+    Barber sleeps while waiting for a customer to arrive in the waiting room. Upon customers arrival,
+    the barber is notified and proceeds to signal that he is ready to cut hair.
 
     Arguments:
         shared (Shared) -- an instance of the Shared class containing semaphores and other shared variables
     """
     while True:
-        shared.customer.wait()  # wait until a customer arrives
-        shared.barber.signal()  # start cutting hair
+        shared.customer.wait()  # sleep until a customer arrives
+        shared.barber.signal()  # indicate readiness to cut hair
 
         cut_hair()
 
