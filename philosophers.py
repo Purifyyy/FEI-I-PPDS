@@ -33,8 +33,13 @@ def philosopher(i: int, shared: Shared):
     for _ in range(NUM_RUNS):
         think(i)
 
-        shared.forks[i].lock()
-        shared.forks[(i+1) % NUM_PHILOSOPHERS].lock()
+        sleep(0.5)
+        if i == 0:
+            shared.forks[(i + 1) % NUM_PHILOSOPHERS].lock()
+            shared.forks[i].lock()
+        else:
+            shared.forks[i].lock()
+            shared.forks[(i + 1) % NUM_PHILOSOPHERS].lock()
         eat(i)
         shared.forks[i].unlock()
         shared.forks[(i + 1) % NUM_PHILOSOPHERS].unlock()
