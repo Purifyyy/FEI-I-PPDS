@@ -36,7 +36,7 @@ def think(i: int):
         i (int) -- the identifier of the philosopher
     """
     print(f"Philosopher {i} is thinking!")
-    sleep(0.1)
+    sleep(0.3)
 
 
 def eat(i: int):
@@ -47,7 +47,7 @@ def eat(i: int):
         i (int) -- the identifier of the philosopher
     """
     print(f"Philosopher {i} is eating!")
-    sleep(0.1)
+    sleep(0.2)
 
 
 def philosopher(i: int, shared: Shared):
@@ -66,12 +66,15 @@ def philosopher(i: int, shared: Shared):
     for _ in range(NUM_RUNS):
         think(i)
 
-        sleep(0.5)
+        # right-handed philosopher
         if i == 0:
             shared.forks[(i + 1) % NUM_PHILOSOPHERS].lock()
+            sleep(0.1)
             shared.forks[i].lock()
+        # left-handed philosophers
         else:
             shared.forks[i].lock()
+            sleep(0.1)
             shared.forks[(i + 1) % NUM_PHILOSOPHERS].lock()
         eat(i)
         shared.forks[i].unlock()
