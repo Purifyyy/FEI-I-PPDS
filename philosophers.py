@@ -66,17 +66,18 @@ def philosopher(i: int, shared: Shared):
     for _ in range(NUM_RUNS):
         think(i)
 
-        # right-handed philosopher
-        if i == 0:
+        # right-handed philosopher path
+        if i % 2 == 0:
             shared.forks[(i + 1) % NUM_PHILOSOPHERS].lock()
             sleep(0.1)
             shared.forks[i].lock()
-        # left-handed philosophers
+        # left-handed philosopher path
         else:
             shared.forks[i].lock()
             sleep(0.1)
             shared.forks[(i + 1) % NUM_PHILOSOPHERS].lock()
         eat(i)
+        # put down forks
         shared.forks[i].unlock()
         shared.forks[(i + 1) % NUM_PHILOSOPHERS].unlock()
 
