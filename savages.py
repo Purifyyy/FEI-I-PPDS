@@ -49,7 +49,6 @@ def cook(i: int, shared: Shared):
         if shared.pot == H:
             shared.empty_pot.clear()
             shared.full_pot.signal()
-            shared.cook_mutex.unlock()
         shared.cook_mutex.unlock()
 
 
