@@ -51,7 +51,7 @@ For both the savage thread and the cook thread, we implement target functions wi
 
 #### Barrier
 
-To ensure that the savages always begin the feast together, our implementation uses a barrier. A barrier in parallel programming is a synchronization mechanism that allows threads to wait for each other, preventing race conditions and ensuring a known state. The components that compose a barrier in out implementation, were mentioned above. The following code snippet represents the barrier:
+To ensure that the savages always begin the feast together, our implementation uses a barrier. A barrier in parallel programming is a synchronization mechanism that allows threads to wait for each other, preventing race conditions and ensuring a known state. The components that compose a barrier in our implementation, were mentioned above. The following code snippet represents the barrier:
 
 ```python
 shared.barrier_mutex.lock()
