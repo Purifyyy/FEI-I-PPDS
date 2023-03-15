@@ -37,7 +37,7 @@ def put_portion(i: int, shared: Shared):
 
 def get_portion(i: int, shared: Shared):
     shared.pot -= 1
-    print(f"Savage [{i}]: I've took a portion. [{shared.pot}/{H} left]")
+    print(f"Savage [{i}]: I've took a portion and I'm going to eat now. [{shared.pot}/{H} left]")
 
 
 def cook(i: int, shared: Shared):
