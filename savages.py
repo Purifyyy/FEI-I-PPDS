@@ -5,13 +5,13 @@ Dinning savages simulation.
 """
 
 
-__authors__ = "Tomáš Baďura"
+__authors__ = "Tomáš Baďura, Marián Šebeňa"
 
 
 from fei.ppds import Thread, Mutex, Semaphore, print, Event
 from time import sleep
 
-H: int = 10  # number of portions in a full pot
+H: int = 5  # number of portions in a full pot
 D: int = 3  # number of savages
 K: int = 4  # number of cooks
 
@@ -32,12 +32,12 @@ class Shared:
 
 def put_portion(i: int, shared: Shared):
     shared.pot += 1
-    print(f"Cook {i}: [{shared.pot}/{H}]")
+    print(f"\033[34mCook [{i}]: I've added a portion. [{shared.pot}/{H}]\033[00m")
 
 
 def get_portion(i: int, shared: Shared):
-    print(f"Savage [{i}]: I'm taking a portion")
     shared.pot -= 1
+    print(f"Savage [{i}]: I've took a portion. [{shared.pot}/{H} left]")
 
 
 def cook(i: int, shared: Shared):
@@ -51,6 +51,7 @@ def cook(i: int, shared: Shared):
             shared.empty_pot.clear()
             shared.full_pot.signal()
             shared.cook_mutex.unlock()
+            print(f"\033[92mCook [{i}]: The pot is full, savages may continue.\033[00m")
             continue
         put_portion(i, shared)
         shared.cook_mutex.unlock()
@@ -63,12 +64,13 @@ def savage(i: int, shared: Shared):
         shared.barrier_count += 1
         if shared.barrier_count == D:
             shared.turnstile1.signal(D)
+            print(f"\033[36mWe're all here, let the feast begin.\033[00m")
         shared.barrier_mutex.unlock()
         shared.turnstile1.wait()
 
         shared.savage_mutex.lock()
         if shared.pot == 0:
-            print(f"Savage [{i}]: There is no food left, I'm waking up the chefs")
+            print(f"\033[31mSavage [{i}]: There is no food left, I'm waking up the cooks.\033[00m")
             shared.empty_pot.signal()
             shared.full_pot.wait()
         get_portion(i, shared)
