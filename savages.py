@@ -42,13 +42,17 @@ def get_portion(i: int, shared: Shared):
 
 def cook(i: int, shared: Shared):
     while True:
-        shared.empty_pot.wait()
+
+        sleep(0.3)  # cooking a portion
+
         shared.cook_mutex.lock()
         shared.empty_pot.wait()
-        put_portion(i, shared)
         if shared.pot == H:
             shared.empty_pot.clear()
             shared.full_pot.signal()
+            shared.cook_mutex.unlock()
+            continue
+        put_portion(i, shared)
         shared.cook_mutex.unlock()
 
 
@@ -70,7 +74,7 @@ def savage(i: int, shared: Shared):
         get_portion(i, shared)
         shared.savage_mutex.unlock()
 
-        sleep(0.2)  # pseudo-eating state
+        sleep(0.2)  # eating a portion
 
         shared.barrier_mutex.lock()
         shared.barrier_count -= 1
