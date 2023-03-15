@@ -5,7 +5,7 @@
 
 ## Assignment introduction
 
-The savages in Equatorial Guinea are a very social and sophisticated type of people. Not only do they eat together every day, but they also have skilled cooks among them who prepare excellent zebra goulash. However, they need a reliable system in which to communicate all the actions related to the communal feast.
+A concurrency and resource allocation problem involving a group of **savages** who must share a communal pot of food. The savages in Equatorial Guinea are a very social and sophisticated type of people. Not only do they eat together every day, but they also have skilled cooks among them who prepare excellent zebra goulash. However, they need a reliable system in which to communicate all the actions related to the communal feast.
 
 ## Specification of the problem
 
