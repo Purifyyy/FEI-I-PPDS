@@ -15,3 +15,4 @@ Repository for semi-compulsory university course [I-PPDS](https://uim.fei.stuba.
 2. [Assignment 02](https://github.com/Purifyyy/Badura_98780_feippds/tree/02) - Sleeping barber problem
 3. [Assignment 03](https://github.com/Purifyyy/Badura_98780_feippds/tree/03) - Dining philosophers problem
 4. [Assignment 04](https://github.com/Purifyyy/Badura_98780_feippds/tree/04) - Savages
+5. [Assignment 05](https://github.com/Purifyyy/Badura_98780_feippds/tree/05) - CUDA grayscale
