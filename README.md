@@ -55,7 +55,7 @@ Disclaimer: I do not claim ownership of images used in this showcase, they are p
 
 ## Installation guide
 
-In order to run our grayscale conversion script, a [NumPy]((https://numpy.org/install/)), [Numba]((https://numba.readthedocs.io/en/stable/user/installing.html)), [matplotlib]((https://matplotlib.org/stable/users/installing/index.html)) python packages are required. Python version 3.8–3.10 is also required. Numba is compatible with NumPy versions 1.21–1.24. Additionally a CUDA capable GPU is necessary, along with the [CUDA toolkit]((https://developer.nvidia.com/cuda-toolkit-archive)). 
+In order to run our grayscale conversion script, a [NumPy](https://numpy.org/install/), [Numba](https://numba.readthedocs.io/en/stable/user/installing.html), [matplotlib](https://matplotlib.org/stable/users/installing/index.html) python packages are required. Python version 3.8–3.10 is also required. Numba is compatible with NumPy versions 1.21–1.24. Additionally a CUDA capable GPU is necessary, along with the [CUDA toolkit](https://developer.nvidia.com/cuda-toolkit-archive). 
 
 ## References
 
